@@ -1,0 +1,11 @@
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+*.bak
+*.tar.gz
+*.ipk
+*.apk
+build/
+dist/
+.openwrt-buildroot/

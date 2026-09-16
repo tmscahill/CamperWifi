@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+IP="192.168.50.222"
+uci -q delete mwan3.portal_ipad || true
+uci set mwan3.portal_ipad='rule'
+uci set mwan3.portal_ipad.src_ip="${IP}/32"
+uci set mwan3.portal_ipad.family='ipv4'
+uci set mwan3.portal_ipad.proto='all'
+uci set mwan3.portal_ipad.use_policy='campground_only'
+uci -q delete mwan3.default_ipv4 || true
+uci set mwan3.default_ipv4='rule'
+uci set mwan3.default_ipv4.dest_ip='0.0.0.0/0'
+uci set mwan3.default_ipv4.family='ipv4'
+uci set mwan3.default_ipv4.proto='all'
+uci set mwan3.default_ipv4.use_policy='camper_failover'
+uci commit mwan3
+/etc/init.d/mwan3 restart
+echo "ON"

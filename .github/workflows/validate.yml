@@ -1,0 +1,31 @@
+name: Validate
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install validators
+        run: sudo apt-get update && sudo apt-get install -y shellcheck jq
+      - name: Shell syntax
+        run: |
+          find scripts tools -type f \( -name '*.sh' -o -perm -111 \) -print0 | xargs -0 -r -n1 sh -n
+          find openwrt/luci-app-camperwifi/root/usr/bin -type f -print0 | xargs -0 -r -n1 sh -n
+      - name: ShellCheck
+        run: |
+          shellcheck scripts/*.sh tools/*.sh || true
+          shellcheck openwrt/luci-app-camperwifi/root/usr/bin/*
+      - name: Validate JSON
+        run: find . -type f -name '*.json' -print0 | xargs -0 -r -n1 jq empty
+      - name: Validate JavaScript syntax
+        run: node --check openwrt/luci-app-camperwifi/htdocs/luci-static/resources/view/network/camperwifi.js
+      - name: Validate package payload
+        run: |
+          test -f openwrt/luci-app-camperwifi/Makefile
+          test -x openwrt/luci-app-camperwifi/root/usr/bin/camperwifi-portal-on
+          test -x openwrt/luci-app-camperwifi/root/usr/bin/camperwifi-portal-off
+          test -x openwrt/luci-app-camperwifi/root/usr/bin/camperwifi-portal-status

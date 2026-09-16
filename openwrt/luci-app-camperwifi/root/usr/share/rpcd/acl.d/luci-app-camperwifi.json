@@ -1,0 +1,16 @@
+{
+  "luci-app-camperwifi": {
+    "description": "Grant access to CamperWifi captive portal controls",
+    "read": {
+      "file": {
+        "/usr/bin/camperwifi-portal-status": [ "exec" ]
+      }
+    },
+    "write": {
+      "file": {
+        "/usr/bin/camperwifi-portal-on": [ "exec" ],
+        "/usr/bin/camperwifi-portal-off": [ "exec" ]
+      }
+    }
+  }
+}

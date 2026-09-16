@@ -1,0 +1,25 @@
+Known project design (reference; do not blindly import over an existing router):
+
+desk_primary: interface=desk, metric=1, weight=1
+campground_secondary: interface=campground, metric=2, weight=1
+iphone_backup: interface=IPhone_WAN, metric=3, weight=1
+
+policy camper_failover:
+  desk_primary campground_secondary iphone_backup
+  last_resort=unreachable
+
+policy campground_only:
+  campground_secondary
+  last_resort=unreachable
+
+rule portal_ipad:
+  src_ip=192.168.50.222/32
+  family=ipv4
+  proto=all
+  use_policy=campground_only
+
+rule default_ipv4:
+  dest_ip=0.0.0.0/0
+  family=ipv4
+  proto=all
+  use_policy=camper_failover

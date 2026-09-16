@@ -1,0 +1,8 @@
+#!/bin/sh
+POLICY="$(uci -q get mwan3.portal_ipad.use_policy)"
+IP="$(uci -q get mwan3.portal_ipad.src_ip)"
+if [ "$POLICY" = "campground_only" ]; then
+    echo "ON ${IP}"
+else
+    echo "OFF"
+fi

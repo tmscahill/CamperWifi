@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+uci -q delete mwan3.portal_ipad || true
+uci commit mwan3
+/etc/init.d/mwan3 restart
+echo "OFF"
