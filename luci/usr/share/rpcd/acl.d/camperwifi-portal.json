@@ -1,0 +1,7 @@
+{
+  "camperwifi-portal": {
+    "description": "CamperWifi campground captive portal controls",
+    "read": { "ubus": { "file": [ "exec" ] } },
+    "write": { "ubus": { "file": [ "exec" ] } }
+  }
+}

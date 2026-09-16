@@ -1,0 +1,8 @@
+{
+  "admin/network/campground-portal": {
+    "title": "Campground Portal",
+    "order": 95,
+    "action": { "type": "view", "path": "network/campground_portal" },
+    "depends": { "acl": [ "camperwifi-portal" ] }
+  }
+}
